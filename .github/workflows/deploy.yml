@@ -19,7 +19,5 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/deploy/apps
-            git pull git@github.com:SelfDevComp/infrastructure.git
-            cd infrastructure
-            docker compose -f docker-compose.dev.yaml up -d
+            cd /home/deploy/apps/infrastructure
+            docker compose -f docker-compose.prod.yaml up -d
