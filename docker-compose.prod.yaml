@@ -45,9 +45,10 @@ services:
         condition: service_healthy
 
   backend:
-    build:
-      context: ..
-      dockerfile: infra/Dockerfile.backend
+    image: ghcr.io/selfdevcomp/backend:68b8a65ced0cad76990483fd912bac3d79c1e214
+    restart: unless-stopped
+    volumes:
+      - ./.env:/app/.env:ro
     networks:
       - self-dev
     labels:
@@ -61,9 +62,8 @@ services:
         condition: service_healthy
 
   frontend:
-    build:
-      context: ..
-      dockerfile: infra/Dockerfile.frontend
+    image: ghcr.io/selfdevcomp/frontend:7b0f028fd4678da7cb7213476f4768630334e584
+    restart: unless-stopped
     networks:
       - self-dev
     labels:
