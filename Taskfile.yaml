@@ -1,0 +1,51 @@
+version: "3"
+
+tasks:
+  default:
+    cmds:
+      - task --list
+    silent: true
+
+### COMPOSE
+
+  up:
+    desc: start all containers for production 
+    cmds:
+      - docker compose up -d
+
+  down:
+    desc: stop all containers 
+    cmds:
+      - docker compose down
+
+### LOGS
+
+  logs:
+    desc: check logs in real time of all containers
+    cmds:
+      - docker compose logs -f 
+
+  logs-backend:
+    desc: check logs in backend container
+    cmds:
+      - docker compose logs backend -f 
+
+  logs-frontend:
+    desc: check logs in frontend container
+    cmds:
+      - docker compose logs frontend -f
+
+  logs-traefik:
+    desc: check logs in traefik container
+    cmds:
+      - docker compose logs traefik -f
+  
+  logs-auth:
+    desc: check logs in auth container
+    cmds:
+      - docker compose logs auth -f
+    
+  logs-db:
+    desc: check logs in db
+    cmds:
+      - docker compose logs db -f
