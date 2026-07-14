@@ -20,4 +20,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/deploy/apps/infrastructure
+            git pull
             docker compose -f docker-compose.prod.yaml up -d

@@ -53,7 +53,7 @@ services:
     image: ghcr.io/selfdevcomp/backend:68b8a65ced0cad76990483fd912bac3d79c1e214
     restart: unless-stopped
     volumes:
-      - ./.env:/app/.env:ro
+      - .env:/app/.env:ro
     networks:
       - self-dev
     labels:
