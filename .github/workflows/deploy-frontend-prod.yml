@@ -21,8 +21,7 @@ jobs:
             cd /home/deploy/apps/infrastructure
             git pull --ff-only
             export FRONTEND_IMAGE="${{ github.event.client_payload.image }}"
-            docker compose -f docker-compose.prod.frontend.yaml pull frontend
-            docker compose -f docker-compose.prod.frontend.yaml up -d --force-recreate frontend
+            task prod:frontend
             sleep 10
             curl -I --fail https://self-dev.tech
-            docker image prune -f
+            task prune

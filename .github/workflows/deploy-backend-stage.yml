@@ -21,6 +21,5 @@ jobs:
             cd /home/deploy/apps/infrastructure
             git pull --ff-only
             export BACKEND_IMAGE="${{ github.event.client_payload.image }}"
-            docker pull "$BACKEND_IMAGE"
-            docker compose -f docker-compose.stage.backend.yaml up -d
-            docker image prune -f
+            task stage:backend
+            task prune
