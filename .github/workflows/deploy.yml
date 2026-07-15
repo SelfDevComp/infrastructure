@@ -1,18 +1,15 @@
-name: Deploy
+name: Deploy Stage
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
+  repository_dispatch:
+    types:
+      - deploy-stage
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Deploy to server
+      - name: Deploy to stage
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -21,8 +18,12 @@ jobs:
           script: |
             set -e
             cd /home/deploy/apps/infrastructure
+            git checkout dev
             git pull --ff-only
-            docker compose pull
-            docker compose --profile tools run --rm migrate
-            docker compose up -d --remove-orphans
+            export FRONTEND_IMAGE=${{ github.event.client_payload.image }}
+            docker compose -f docker-compose.stage.yaml pull
+            docker compose -f docker-compose.stage.yaml --profile tools run --rm migrate
+            docker compose -f docker-compose.stage.yaml up -d --remove-orphans
+            sleep 20
+            curl --fail https://stage.self-dev.tech
             docker image prune -f
