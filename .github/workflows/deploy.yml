@@ -18,8 +18,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             set -e
-            cd /home/deploy/apps/infrastructure
-            git checkout main
+            cd /home/apps/infrastructure
             git pull --ff-only
             export FRONTEND_IMAGE=${{ github.event.client_payload.image }}
             docker compose -f docker-compose.stage.yaml up -d --remove-orphans
