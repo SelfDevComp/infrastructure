@@ -22,7 +22,7 @@ jobs:
             git pull --ff-only
             export FRONTEND_IMAGE="${{ github.event.client_payload.image }}"
             docker pull "$FRONTEND_IMAGE"
-            docker compose -f docker-compose.prod.yaml -f docker-compose.prod.frontend.yaml up -d --remove-orphans
+            docker compose -f docker-compose.prod.frontend.yaml up -d
             sleep 20
             curl --fail https://self-dev.tech
             docker image prune -f
