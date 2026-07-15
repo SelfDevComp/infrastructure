@@ -80,5 +80,5 @@ networks:
     external: true
 
   self-dev:
-    name: "self-dev-stage-network"
+    name: "self-dev-stage"
     driver: bridge
