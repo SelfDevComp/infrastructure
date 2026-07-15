@@ -1,9 +1,9 @@
-name: Deploy Stage
+name: Backend Deploy Stage
 
 on:
   repository_dispatch:
     types:
-      - deploy-stage
+      - backend-deploy-stage
 
 jobs:
   deploy:
@@ -20,9 +20,7 @@ jobs:
             set -e
             cd /home/deploy/apps/infrastructure
             git pull --ff-only
-            export FRONTEND_IMAGE="${{ github.event.client_payload.image }}"
-            docker pull "$FRONTEND_IMAGE"
+            export BACKEND_IMAGE="${{ github.event.client_payload.image }}"
+            docker pull "$BACKEND_IMAGE"
             docker compose -f docker-compose.stage.yaml up -d --remove-orphans
-            sleep 20
-            curl --fail https://stage.self-dev.tech
             docker image prune -f

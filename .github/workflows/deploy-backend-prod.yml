@@ -1,9 +1,9 @@
-name: Deploy Prod
+name: Backend Deploy Prod
 
 on:
   repository_dispatch:
     types:
-      - deploy-prod
+      - backend-deploy-prod
 
 jobs:
   deploy:
@@ -20,9 +20,7 @@ jobs:
             set -e
             cd /home/deploy/apps/infrastructure
             git pull --ff-only
-            export FRONTEND_IMAGE="${{ github.event.client_payload.image }}"
-            docker pull "$FRONTEND_IMAGE"
-            docker compose -f docker-compose.prod.yaml up -d --remove-orphans
-            sleep 20
-            curl --fail https://self-dev.tech
+            export BACKEND_IMAGE="${{ github.event.client_payload.image }}"
+            docker pull "$BACKEND_IMAGE"
+            docker compose -f docker-compose.stage.yaml up -d --remove-orphans
             docker image prune -f
