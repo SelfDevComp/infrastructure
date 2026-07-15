@@ -1,3 +1,5 @@
+name: self-dev
+
 services:
   frontend:
     image: ${FRONTEND_IMAGE}

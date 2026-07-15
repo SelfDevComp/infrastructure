@@ -1,3 +1,5 @@
+name: self-dev-stage
+
 services:
   frontend:
     image: ${FRONTEND_IMAGE}
