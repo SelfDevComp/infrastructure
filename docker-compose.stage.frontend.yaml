@@ -5,7 +5,7 @@ services:
     image: ${FRONTEND_IMAGE}
     restart: unless-stopped
     networks:
-      - proxy
+      - self-dev
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend-stage.rule=Host(`stage.self-dev.tech`)"
