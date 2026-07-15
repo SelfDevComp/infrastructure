@@ -15,9 +15,6 @@ services:
       - "traefik.http.routers.backend-stage.entrypoints=websecure"
       - "traefik.http.routers.backend-stage.tls.certresolver=le"
       - "traefik.http.services.backend-stage.loadbalancer.server.port=8080"
-    depends_on:
-      db:
-        condition: service_healthy
 
 
 networks:
