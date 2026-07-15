@@ -1,51 +1,133 @@
 version: "3"
 
+vars:
+  PROD_COMPOSE: docker-compose.prod.yaml
+  PROD_FRONTEND: docker-compose.prod.frontend.yaml
+  PROD_BACKEND: docker-compose.prod.backend.yaml
+
+  STAGE_COMPOSE: docker-compose.stage.yaml
+  STAGE_FRONTEND: docker-compose.stage.frontend.yaml
+  STAGE_BACKEND: docker-compose.stage.backend.yaml
+
 tasks:
+
   default:
     cmds:
       - task --list
     silent: true
 
-### COMPOSE
-
-  up:
-    desc: start all containers for production 
+  prod:up:
+    desc: Start all production services
     cmds:
-      - docker compose up -d
+      - docker compose -f {{.PROD_COMPOSE}} up -d
 
-  down:
-    desc: stop all containers 
+  prod:down:
+    desc: Stop all production services
     cmds:
-      - docker compose down
+      - docker compose -f {{.PROD_COMPOSE}} down
 
-### LOGS
+  prod:restart:
+    desc: Restart all production services
+    cmds:
+      - docker compose -f {{.PROD_COMPOSE}} restart
+
+  prod:ps:
+    desc: Show production containers
+    cmds:
+      - docker compose -f {{.PROD_COMPOSE}} ps
+
+  stage:up:
+    desc: Start all stage services
+    cmds:
+      - docker compose -f {{.STAGE_COMPOSE}} up -d
+
+  stage:down:
+    desc: Stop all stage services
+    cmds:
+      - docker compose -f {{.STAGE_COMPOSE}} down
+
+  stage:restart:
+    desc: Restart stage services
+    cmds:
+      - docker compose -f {{.STAGE_COMPOSE}} restart
+
+  stage:ps:
+    desc: Show stage containers
+    cmds:
+      - docker compose -f {{.STAGE_COMPOSE}} ps
+
+  prod:frontend:
+    desc: Deploy production frontend
+    cmds:
+      - docker compose -f {{.PROD_FRONTEND}} pull frontend
+      - docker compose -f {{.PROD_FRONTEND}} up -d --force-recreate frontend
+
+  stage:frontend:
+    desc: Deploy stage frontend
+    cmds:
+      - docker compose -f {{.STAGE_FRONTEND}} pull frontend
+      - docker compose -f {{.STAGE_FRONTEND}} up -d --force-recreate frontend
+
+  prod:backend:
+    desc: Deploy production backend
+    cmds:
+      - docker compose -f {{.PROD_BACKEND}} pull backend
+      - docker compose -f {{.PROD_BACKEND}} up -d --force-recreate backend
+
+  stage:backend:
+    desc: Deploy stage backend
+    cmds:
+      - docker compose -f {{.STAGE_BACKEND}} pull backend
+      - docker compose -f {{.STAGE_BACKEND}} up -d --force-recreate backend
 
   logs:
-    desc: check logs in real time of all containers
+    desc: Show all production logs
     cmds:
-      - docker compose logs -f 
+      - docker compose -f {{.PROD_COMPOSE}} logs -f
 
-  logs-backend:
-    desc: check logs in backend container
-    cmds:
-      - docker compose logs backend -f 
 
-  logs-frontend:
-    desc: check logs in frontend container
+  logs:frontend:
+    desc: Frontend logs
     cmds:
-      - docker compose logs frontend -f
+      - docker compose -f {{.PROD_FRONTEND}} logs -f frontend
 
-  logs-traefik:
-    desc: check logs in traefik container
+
+  logs:backend:
+    desc: Backend logs
     cmds:
-      - docker compose logs traefik -f
-  
-  logs-auth:
-    desc: check logs in auth container
+      - docker compose -f {{.PROD_BACKEND}} logs -f backend
+
+
+  logs:traefik:
+    desc: Traefik logs
     cmds:
-      - docker compose logs auth -f
-    
-  logs-db:
-    desc: check logs in db
+      - docker compose -f {{.PROD_COMPOSE}} logs -f traefik
+
+
+  logs:auth:
+    desc: Auth logs
     cmds:
-      - docker compose logs db -f
+      - docker compose -f {{.PROD_COMPOSE}} logs -f auth
+
+
+  logs:db:
+    desc: Database logs
+    cmds:
+      - docker compose -f {{.PROD_COMPOSE}} logs -f db
+
+
+  logs:redis:
+    desc: Redis logs
+    cmds:
+      - docker compose -f {{.PROD_COMPOSE}} logs -f redis
+
+  prune:
+    desc: Remove unused docker images
+    cmds:
+      - docker image prune -f
+
+
+  prune:all:
+    desc: Remove unused docker resources
+    cmds:
+      - docker system prune -f
