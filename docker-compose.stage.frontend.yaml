@@ -12,5 +12,5 @@ services:
       - "traefik.http.services.frontend-stage.loadbalancer.server.port=80"
 
 networks:
-  proxy:
+  self-dev-network:
     external: true

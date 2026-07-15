@@ -17,5 +17,5 @@ services:
         condition: service_healthy
 
 networks:
-  self-dev:
+  self-dev-network:
     external: true

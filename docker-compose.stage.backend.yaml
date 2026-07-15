@@ -22,5 +22,5 @@ networks:
   proxy:
     external: true
 
-  self-dev:
+  self-dev-stage-network:
     external: true
