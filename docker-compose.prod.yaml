@@ -68,7 +68,7 @@ services:
         condition: service_healthy
 
   frontend:
-    image: ghcr.io/selfdevcomp/frontend:7b0f028fd4678da7cb7213476f4768630334e584
+    image: ${FRONTEND_IMAGE}
     restart: unless-stopped
     networks:
       - self-dev
