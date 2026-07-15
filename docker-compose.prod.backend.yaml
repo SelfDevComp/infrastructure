@@ -1,5 +1,6 @@
-backend:
-    image: ghcr.io/selfdevcomp/backend:bd0c1b85169bf3ef321f4509cd4bb4f0446e24eb
+services:  
+  backend:
+    image: ${BACKEND_IMAGE}
     restart: unless-stopped
     volumes:
       - .env:/app/.env:ro
@@ -14,3 +15,7 @@ backend:
     depends_on:
       db:
         condition: service_healthy
+
+network:
+  self-dev:
+    external: true
