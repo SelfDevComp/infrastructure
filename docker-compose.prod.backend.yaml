@@ -1,0 +1,16 @@
+backend:
+    image: ghcr.io/selfdevcomp/backend:bd0c1b85169bf3ef321f4509cd4bb4f0446e24eb
+    restart: unless-stopped
+    volumes:
+      - .env:/app/.env:ro
+    networks:
+      - self-dev
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`api.self-dev.tech`)"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls.certresolver=le"
+      - "traefik.http.services.backend.loadbalancer.server.port=8080"
+    depends_on:
+      db:
+        condition: service_healthy

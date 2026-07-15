@@ -50,35 +50,6 @@ services:
       db:
         condition: service_healthy
 
-  backend:
-    image: ghcr.io/selfdevcomp/backend:bd0c1b85169bf3ef321f4509cd4bb4f0446e24eb
-    restart: unless-stopped
-    volumes:
-      - .env:/app/.env:ro
-    networks:
-      - self-dev
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`api.self-dev.tech`)"
-      - "traefik.http.routers.backend.entrypoints=websecure"
-      - "traefik.http.routers.backend.tls.certresolver=le"
-      - "traefik.http.services.backend.loadbalancer.server.port=8080"
-    depends_on:
-      db:
-        condition: service_healthy
-
-  frontend:
-    image: ${FRONTEND_IMAGE}
-    restart: unless-stopped
-    networks:
-      - self-dev
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host(`self-dev.tech`)"
-      - "traefik.http.routers.frontend.entrypoints=websecure"
-      - "traefik.http.routers.frontend.tls.certresolver=le"
-      - "traefik.http.services.frontend.loadbalancer.server.port=80"
-
   db:
     image: postgres:18-alpine
     networks:

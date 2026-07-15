@@ -22,5 +22,5 @@ jobs:
             git pull --ff-only
             export BACKEND_IMAGE="${{ github.event.client_payload.image }}"
             docker pull "$BACKEND_IMAGE"
-            docker compose -f docker-compose.stage.yaml up -d --remove-orphans
+            docker compose -f docker-compose.stage.yaml -f docker-compose.stage.backend.yaml up -d --remove-orphans
             docker image prune -f

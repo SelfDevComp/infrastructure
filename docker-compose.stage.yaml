@@ -22,35 +22,6 @@ services:
       db:
         condition: service_healthy
 
-  backend:
-    image: ghcr.io/selfdevcomp/backend:bd0c1b85169bf3ef321f4509cd4bb4f0446e24eb
-    restart: unless-stopped
-    volumes:
-      - .env.stage:/app/.env:ro
-    networks:
-      - proxy
-      - self-dev
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.backend-stage.rule=Host(`api.stage.self-dev.tech`)"
-      - "traefik.http.routers.backend-stage.entrypoints=websecure"
-      - "traefik.http.routers.backend-stage.tls.certresolver=le"
-      - "traefik.http.services.backend-stage.loadbalancer.server.port=8080"
-    depends_on:
-      db:
-        condition: service_healthy
-
-  frontend:
-    image: ${FRONTEND_IMAGE}
-    restart: unless-stopped
-    networks:
-      - proxy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.frontend-stage.rule=Host(`stage.self-dev.tech`)"
-      - "traefik.http.routers.frontend-stage.entrypoints=websecure"
-      - "traefik.http.routers.frontend-stage.tls.certresolver=le"
-      - "traefik.http.services.frontend-stage.loadbalancer.server.port=80"
 
   db:
     image: postgres:18-alpine

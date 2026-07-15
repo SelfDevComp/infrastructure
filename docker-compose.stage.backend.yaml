@@ -1,0 +1,26 @@
+services:
+  backend:
+    image: ${BACKEND_IMAGE}
+    restart: unless-stopped
+    volumes:
+      - .env.stage:/app/.env:ro
+    networks:
+      - proxy
+      - self-dev
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend-stage.rule=Host(`api.stage.self-dev.tech`)"
+      - "traefik.http.routers.backend-stage.entrypoints=websecure"
+      - "traefik.http.routers.backend-stage.tls.certresolver=le"
+      - "traefik.http.services.backend-stage.loadbalancer.server.port=8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+
+networks:
+  proxy:
+    external: true
+
+  self-dev:
+    external: true
