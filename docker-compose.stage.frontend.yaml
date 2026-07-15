@@ -5,6 +5,7 @@ services:
     image: ${FRONTEND_IMAGE}
     restart: unless-stopped
     networks:
+      - proxy
       - self-dev
     labels:
       - "traefik.enable=true"
