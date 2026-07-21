@@ -3,6 +3,8 @@ name: self-dev
 services:
   frontend:
     image: ${FRONTEND_IMAGE}
+    env_file:
+      - .env
     restart: unless-stopped
     networks:
       - self-dev
