@@ -5,20 +5,16 @@ services:
     image: ${FRONTEND_IMAGE}
     restart: unless-stopped
     networks:
-      - proxy
       - self-dev
     labels:
       - "traefik.enable=true"
-      - "traefik.docker.network=proxy"
       - "traefik.http.routers.frontend.rule=Host(`self-dev.tech`)"
       - "traefik.http.routers.frontend.entrypoints=websecure"
-      - "traefik.http.routers.frontend.tls.certresolver=le"
+      - "traefik.http.routers.backend-stage.tls.certresolver=le"
       - "traefik.http.services.frontend.loadbalancer.server.port=80"
 
-networks:
-  proxy:
-    external: true
 
+networks:
   self-dev:
     name: "self-dev"
     external: true

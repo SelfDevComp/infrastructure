@@ -1,26 +1,22 @@
-name: self-dev-stage
+name: self-dev
 
 services:
   backend:
     image: ${BACKEND_IMAGE}
     restart: unless-stopped
     volumes:
-      - .env.stage:/app/.env:ro
+      - .env:/app/.env:ro
     networks:
-      - proxy
       - self-dev
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend-stage.rule=Host(`stage.api.self-dev.tech`)"
+      - "traefik.http.routers.backend-stage.rule=Host(`api.self-dev.test`)"
       - "traefik.http.routers.backend-stage.entrypoints=websecure"
       - "traefik.http.routers.backend-stage.tls.certresolver=le"
       - "traefik.http.services.backend-stage.loadbalancer.server.port=8080"
 
 
 networks:
-  proxy:
-    external: true
-
   self-dev:
-    name: "self-dev-stage"
+    name: "self-dev"
     external: true
