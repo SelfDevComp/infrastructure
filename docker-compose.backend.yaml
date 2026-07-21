@@ -10,10 +10,10 @@ services:
       - self-dev
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend-stage.rule=Host(`api.self-dev.test`)"
-      - "traefik.http.routers.backend-stage.entrypoints=websecure"
-      - "traefik.http.routers.backend-stage.tls.certresolver=le"
-      - "traefik.http.services.backend-stage.loadbalancer.server.port=8080"
+      - "traefik.http.routers.backend.rule=Host(`api.self-dev.test`)"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls.certresolver=le"
+      - "traefik.http.services.backend.loadbalancer.server.port=8080"
 
 
 networks:

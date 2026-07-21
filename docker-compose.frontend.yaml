@@ -12,7 +12,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`self-dev.tech`)"
       - "traefik.http.routers.frontend.entrypoints=websecure"
-      - "traefik.http.routers.backend-stage.tls.certresolver=le"
+      - "traefik.http.routers.frontend.tls.certresolver=le"
       - "traefik.http.services.frontend.loadbalancer.server.port=80"
 
 
