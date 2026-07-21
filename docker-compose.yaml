@@ -78,7 +78,7 @@ services:
       - "redis-data:/data"
 
   migrate:
-    image: $(BACKEND_IMAGE)
+    image: ${BACKEND_IMAGE}
     volumes:
       - .env:/app/.env:ro
     profiles:
