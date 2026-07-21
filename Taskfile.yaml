@@ -6,4 +6,13 @@ tasks:
       - task --list
     silent: true
 
-  
+  up:
+    cmds:
+      - docker compose up -d
+      - docker compose -f docker-compose.backend.yaml up -d
+      - docker compose -f docker-compose.frontend.yaml up -d
+  down:
+    cmds:
+      - docker compose down
+      - docker compose -f docker-compose.backend.yaml down
+      - docker compose -f docker-compose.frontend.yaml down
